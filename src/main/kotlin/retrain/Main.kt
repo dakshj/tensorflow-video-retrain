@@ -25,6 +25,10 @@ fun main(args: Array<String>) {
         throw IllegalArgumentException("The provided path is not a folder!")
     }
 
+    if (!rootDirectory.canWrite()) {
+        throw IOException("Cannot write to ${rootDirectory.path}!")
+    }
+
     generateImagesFromVideos(rootDirectory, fps)
 
     downloadRetrainingScript(rootDirectory)
@@ -53,9 +57,8 @@ fun downloadRetrainingScript(rootDirectory: File) {
     }
 
     val retrainingScriptFile = File(rootDirectory, RETRAINING_SCRIPT_FILE_NAME)
-    if (retrainingScriptFile.exists()) retrainingScriptFile.delete()
 
-    val fos = FileOutputStream(retrainingScriptFile)
+    val fos = FileOutputStream(retrainingScriptFile, false)
     fos.write(response.body()?.bytes())
     fos.close()
     println(" Done.")
