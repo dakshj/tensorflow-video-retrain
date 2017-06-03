@@ -29,7 +29,7 @@ class ImageGenerator(val fps: Int) {
 
                 //Output file path
                 File(file.parentFile.path,
-                        file.nameWithoutExtension + "_%06d.jpg").path)
+                        file.nameWithoutExtension + "_%06d.$EXTENSION_IMAGE").path)
 
         pb.redirectOutput(ProcessBuilder.Redirect.INHERIT)
         pb.redirectError(ProcessBuilder.Redirect.INHERIT)
