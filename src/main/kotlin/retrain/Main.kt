@@ -12,7 +12,9 @@ fun main(args: Array<String>) {
     val trainingDataDir = File(tensorFlowDir, TRAINING_DATA_DIR_NAME)
     val retrainingScriptFile = File(tensorFlowDir, RETRAINING_SCRIPT_FILE_NAME)
 
-    val trainingSummariesDir = File(tensorFlowDir, TRAINING_SUMMARIES_DIR_NAME)
+    val trainingSummariesRootDir = File(tensorFlowDir, TRAINING_SUMMARIES_ROOT_DIR_NAME)
+    trainingSummariesRootDir.mkdirs()
+    val trainingSummariesChildDir = File(trainingSummariesRootDir, TRAINING_SUMMARIES_CHILD_DIR_NAME)
 
     generateImagesFromVideos(trainingDataDir, fps, deleteVideo = deleteVideo)
 
@@ -21,12 +23,12 @@ fun main(args: Array<String>) {
     retrainInception(retrainingScriptFile,
             File(tensorFlowDir, BOTTLENECKS_DIR_NAME),
             File(tensorFlowDir, INCEPTION_MODEL_DIR_NAME),
-            trainingSummariesDir,
+            trainingSummariesChildDir,
             File(tensorFlowDir, RETRAINED_GRAPH_FILE_NAME),
             File(tensorFlowDir, RETRAINED_LABELS_FILE_NAME),
             trainingDataDir)
 
-    launchTensorBoard(trainingSummariesDir)
+    launchTensorBoard(trainingSummariesChildDir)
 }
 
 fun downloadRetrainingScript(retrainingScriptFile: File) {
