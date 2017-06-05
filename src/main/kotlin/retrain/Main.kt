@@ -32,8 +32,13 @@ fun main(args: Array<String>) {
     optimizeForInference(File(tensorFlowDir, OPTIMIZE_FOR_INFERENCE_SCRIPT_FILE_NAME),
             retrainedGraphFile, optimizedGraphFile)
 
+    val quantizedGraphFile = File(tensorFlowDir, QUANTIZED_GRAPH_FILE_NAME)
+
     quantizeModel(File(tensorFlowDir, QUANTIZE_MODEL_SCRIPT_FILE_NAME), optimizedGraphFile,
-            File(tensorFlowDir, QUANTIZED_GRAPH_FILE_NAME))
+            quantizedGraphFile)
+
+    gzipFile(quantizedGraphFile,
+            File(tensorFlowDir, "${quantizedGraphFile.nameWithoutExtension}.gz"))
 
     launchTensorBoard(trainingSummariesChildDir)
 }
