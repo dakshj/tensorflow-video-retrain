@@ -10,7 +10,7 @@ fun main(args: Array<String>) {
     val deleteVideo = if (args.size > 2) args[2].toBoolean() else false
 
     val trainingDataDir = File(tensorFlowDir, TRAINING_DATA_DIR_NAME)
-    val retrainingScriptFile = File(tensorFlowDir, RETRAINING_SCRIPT_FILE_NAME)
+    val retrainingScriptFile = File(tensorFlowDir, RETRAIN_MODEL_SCRIPT_FILE_NAME)
 
     val trainingSummariesRootDir = File(tensorFlowDir, TRAINING_SUMMARIES_ROOT_DIR_NAME)
     trainingSummariesRootDir.mkdirs()
@@ -27,9 +27,13 @@ fun main(args: Array<String>) {
             File(tensorFlowDir, RETRAINED_LABELS_FILE_NAME),
             trainingDataDir)
 
+    val optimizedGraphFile = File(tensorFlowDir, OPTIMIZED_GRAPH_FILE_NAME)
+
     optimizeForInference(File(tensorFlowDir, OPTIMIZE_FOR_INFERENCE_SCRIPT_FILE_NAME),
-            retrainedGraphFile,
-            File(tensorFlowDir, OPTIMIZED_GRAPH_FILE_NAME))
+            retrainedGraphFile, optimizedGraphFile)
+
+    quantizeModel(File(tensorFlowDir, QUANTIZE_MODEL_SCRIPT_FILE_NAME), optimizedGraphFile,
+            File(tensorFlowDir, QUANTIZED_GRAPH_FILE_NAME))
 
     launchTensorBoard(trainingSummariesChildDir)
 }
