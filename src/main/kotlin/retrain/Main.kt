@@ -19,9 +19,9 @@ fun main(args: Array<String>) {
 
     generateImagesFromVideos(trainingDataDir, fps, deleteVideo = deleteVideo)
 
-    retrainInception(retrainingScriptFile,
+    retrainModel(retrainingScriptFile,
             File(tensorFlowDir, BOTTLENECKS_DIR_NAME),
-            File(tensorFlowDir, INCEPTION_MODEL_DIR_NAME),
+            File(tensorFlowDir, MODEL_DIR_NAME),
             trainingSummariesChildDir,
             retrainedGraphFile,
             File(tensorFlowDir, RETRAINED_LABELS_FILE_NAME),

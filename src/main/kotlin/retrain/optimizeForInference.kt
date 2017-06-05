@@ -6,7 +6,7 @@ fun optimizeForInference(optimizationScriptFile: File,
                          retrainedGraphFile: File, optimizedGraphFile: File) {
     downloadFile(OPTIMIZE_FOR_INFERENCE_SCRIPT_URL, optimizationScriptFile, true)
 
-    println("Optimizing Inception...")
+    println("Optimizing Model...")
 
     val pb = ProcessBuilder("python", optimizationScriptFile.path,
             "--input", retrainedGraphFile.path,
