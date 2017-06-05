@@ -6,7 +6,9 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-fun downloadFile(url: String, destinationFile: File) {
+fun downloadFile(url: String, destinationFile: File, printToConsole: Boolean) {
+    if (printToConsole) print("Downloading ${destinationFile.name}...")
+
     val client = OkHttpClient()
     val request = Request.Builder().url(url).build()
     val response = client.newCall(request).execute()
@@ -17,4 +19,6 @@ fun downloadFile(url: String, destinationFile: File) {
     val fos = FileOutputStream(destinationFile, false)
     fos.write(response.body()?.bytes())
     fos.close()
+
+    if (printToConsole) println(" Done.")
 }

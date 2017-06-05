@@ -15,24 +15,21 @@ fun main(args: Array<String>) {
     val trainingSummariesRootDir = File(tensorFlowDir, TRAINING_SUMMARIES_ROOT_DIR_NAME)
     trainingSummariesRootDir.mkdirs()
     val trainingSummariesChildDir = File(trainingSummariesRootDir, TRAINING_SUMMARIES_CHILD_DIR_NAME)
+    val retrainedGraphFile = File(tensorFlowDir, RETRAINED_GRAPH_FILE_NAME)
 
     generateImagesFromVideos(trainingDataDir, fps, deleteVideo = deleteVideo)
-
-    downloadRetrainingScript(retrainingScriptFile)
 
     retrainInception(retrainingScriptFile,
             File(tensorFlowDir, BOTTLENECKS_DIR_NAME),
             File(tensorFlowDir, INCEPTION_MODEL_DIR_NAME),
             trainingSummariesChildDir,
-            File(tensorFlowDir, RETRAINED_GRAPH_FILE_NAME),
+            retrainedGraphFile,
             File(tensorFlowDir, RETRAINED_LABELS_FILE_NAME),
             trainingDataDir)
 
-    launchTensorBoard(trainingSummariesChildDir)
-}
+    optimizeForInference(File(tensorFlowDir, OPTIMIZE_FOR_INFERENCE_SCRIPT_FILE_NAME),
+            retrainedGraphFile,
+            File(tensorFlowDir, OPTIMIZED_GRAPH_FILE_NAME))
 
-fun downloadRetrainingScript(retrainingScriptFile: File) {
-    print("Downloading $RETRAINING_SCRIPT_FILE_NAME...")
-    downloadFile(RETRAINING_SCRIPT_URL, retrainingScriptFile)
-    println(" Done.")
+    launchTensorBoard(trainingSummariesChildDir)
 }

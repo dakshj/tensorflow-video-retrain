@@ -6,6 +6,8 @@ fun retrainInception(retrainingScriptFile: File, bottlenecksDir: File,
                      modelDir: File, trainingSummariesDir: File,
                      retrainedGraphFile: File, retrainedLabelsFile: File,
                      imagesDirectory: File) {
+    downloadFile(RETRAINING_SCRIPT_URL, retrainingScriptFile, true)
+
     println("Retraining Inception...")
 
     val pb = ProcessBuilder("python", retrainingScriptFile.path,
