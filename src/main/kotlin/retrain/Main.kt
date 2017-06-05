@@ -38,7 +38,7 @@ fun main(args: Array<String>) {
             quantizedGraphFile)
 
     gzipFile(quantizedGraphFile,
-            File(tensorFlowDir, "${quantizedGraphFile.nameWithoutExtension}.gz"))
+            File(tensorFlowDir, "${quantizedGraphFile.name}.gz"))
 
     launchTensorBoard(trainingSummariesChildDir)
 }
