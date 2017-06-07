@@ -7,7 +7,7 @@ import java.net.URI
 fun launchTensorBoard(tensorBoardDirectory: File) {
     print("Launching TensorBoard...")
     ProcessBuilder("tensorboard",
-            "--logdir", tensorBoardDirectory.path)
+            "--logdir", tensorBoardDirectory.path).start()
     println(" Done.")
 
     println("Opening TensorBoard in the browser...")
